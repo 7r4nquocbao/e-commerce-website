@@ -1,0 +1,33 @@
+.header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  background-color: #F0245E;
+  font-size: 1rem;
+
+  a {
+    color: #FFF;
+    transition: all 0.3s ease-in-out;
+  }
+  a:hover{
+    color: black;
+  }
+
+  &__social{
+    padding-left: 1rem;
+    display: flex;
+  }
+  &__authentication{
+
+    margin: 0px;
+    padding: 0px;
+
+    display: flex;
+    
+  }
+  .col-sm-auto {
+    padding: 0rem;
+  }
+
+}

@@ -1,0 +1,61 @@
+.menu__banner {
+  position: relative;
+}
+.menu{
+  display: flex;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: 'Poppins';
+
+  padding: 2rem 0rem;
+
+  width: 90%;
+  // background: rgba(0,0,0,0);
+  // top: 0;
+  // // position: absolute;
+  // position: -webkit-sticky;
+  // position: sticky;
+
+  &__logo {
+    padding-left: 10rem;
+  }
+  &__link {
+    color:#AAA;
+    transition: all 0.3s ease-in-out;
+    letter-spacing: 0.1rem;
+
+  }
+  &__link:hover {
+    color: black;
+
+  }
+  &__function {
+    display: flex;
+    position: absolute;
+    right: 0;
+
+    &__search {
+      background-color: #f0245e;
+      border-radius: 0.3rem;
+    }
+    &__cart {
+      border: 2px solid #f0245e;
+      border-radius: 0.3rem;
+      i {
+        padding: 0rem 0.5rem;
+      }
+      
+    }
+  }
+}
+.background {
+  height: 100vh;
+  width: 100%;
+
+  background-image: url('../../assets/images/lai81ebh82921.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+
+
+}
+
