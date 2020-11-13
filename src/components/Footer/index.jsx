@@ -13,7 +13,7 @@ function Footer(props) {
       <div className="footer__logo">
         LOGO
       </div>
-      <Row className="footer__menu">
+      <div className="footer__menu">
         <Col>
           <h4>MENU</h4>
           <a>About Us</a>
@@ -38,7 +38,7 @@ function Footer(props) {
           <a>Orders History</a>
           <a>My Account</a>
         </Col>
-      </Row>
+      </div>
       <Row className="footer__paypal">
         <Col sm="auto">
           <i class="fab fa-cc-visa fa-3x"></i>

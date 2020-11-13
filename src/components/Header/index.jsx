@@ -9,7 +9,7 @@ Header.propTypes = {
 function Header(props) {
     return (
 
-        <Row className="header">
+        <div className="header">
             <Col sm="auto">
                 <div className="header__social">
                     <NavLink><i class="fab fa-instagram-square"></i></NavLink>
@@ -27,7 +27,7 @@ function Header(props) {
                 </div>
 
             </Col>
-        </Row>
+        </div>
 
     );
 }
