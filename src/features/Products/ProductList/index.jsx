@@ -14,7 +14,7 @@ class ProductList extends Component {
   componentDidMount() {
     const path = 'https://jkbc8.sse.codesandbox.io/products';
     axios.get(path).then(res => {
-      console.log(res.data);
+
       this.setState({
         products: res.data,
       })
@@ -30,10 +30,10 @@ class ProductList extends Component {
           {
             products.length > 0 && products.map((product, index) => (
               <Col md="3">
-                <Card key={index}>
+                <Card>
                   <CardImg top width="100%" src="https://i1-giaitri.vnecdn.net/2020/11/11/sonyejinava-1605087025-6323-1605087144.jpg?w=300&h=180&q=100&dpr=1&fit=crop&s=gCmfGtI0uaz9jCegx8us-A" alt="Card image cap" />
                   <CardBody>
-                    <CardTitle tag="h5">{product.productName}</CardTitle>
+                    <CardTitle key={index} tag="h5">{product.productName}</CardTitle>
                     <CardText>{product.productDescription}</CardText>
                     <Button>Button</Button>
                   </CardBody>
@@ -42,6 +42,12 @@ class ProductList extends Component {
             ))
 
           }
+          <div className="product">
+            <div className="product__image"></div>
+            <div className="product__title"></div>
+            <div className="product__price"></div>
+
+          </div>
 
 
         </Row>

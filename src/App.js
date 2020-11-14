@@ -1,30 +1,39 @@
-import ProductList from './features/Products/ProductList';
-import React from 'react';
+import React, { Suspense } from 'react';
+import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
 
 import './App.scss';
 
+import NotFound from './components/NotFound';
 import Header from './components/Header';
 import TopMenu from './components/TopMenu';
-import Title from './components/Title';
-import Footer from './components/Footer';
-import SubBanner from './components/Banner/SubBanner';
-import Banner from './components/Banner/MainBanner';
 
+const Home = React.lazy(() => import('./pages/Home'));
+const Login = React.lazy(() => import('./features/Authentication/Login'))
+const Register = React.lazy(() => import('./features/Authentication/Register'))
+const Search = React.lazy(() => import('./features/Search'))
+const Cart = React.lazy(() => import('./features/Cart'))
 
 function App() {
   return (
     <div className="App">
-      <Header/>
-      <TopMenu/>
-      <Banner/>
-      <SubBanner/>
-      <Title title="Products"/>
-      <ProductList/>
-      <Title title="Products 2"/>
-      <ProductList/>
-      <Title title="Products 3"/>
-      <ProductList/>
-      <Footer/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <BrowserRouter>
+          <Header />
+          <TopMenu />
+          <Switch>
+
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/login" component={Login}/>
+            <Route exact path="/register" component={Register}/>
+            <Route exact path="/search" component={Search}/>
+            <Route exact path="/cart" component={Cart}/>
+            <Route component={NotFound}/>
+          </Switch>
+
+        </BrowserRouter>
+      </Suspense>
+
+
     </div>
   );
 }

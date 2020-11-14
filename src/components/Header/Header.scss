@@ -13,9 +13,11 @@
   a {
     color: #FFF;
     transition: all 0.3s ease-in-out;
+    padding: 0rem 0.5rem;
   }
   a:hover{
     color: black;
+    text-decoration: none;
   }
 
   &__social{
@@ -32,6 +34,9 @@
   }
   .col-sm-auto {
     padding: 0rem;
+  }
+  span {
+    color: white;
   }
 
 }
