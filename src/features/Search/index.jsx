@@ -7,8 +7,8 @@ Search.propTypes = {
 
 function Search(props) {
   return (
-    <div>
-      Search
+    <div className="search">
+
     </div>
   );
 }
