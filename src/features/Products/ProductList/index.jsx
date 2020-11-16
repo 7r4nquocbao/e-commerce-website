@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { useSelector } from 'react-redux';
 import { Col, Button, Card, CardBody, CardImg, CardText, CardTitle, Container, Row } from 'reactstrap';
 
 
@@ -19,14 +20,47 @@ class ProductList extends Component {
         products: res.data,
       })
     })
+
   }
   render() {
     const { products } = this.state;
-    return (
+    console.log(this.state.products)
 
+    function handleAddToCart(item){
+      let cartItems = [];
+      let cart = localStorage.getItem('cart');
+      if(cart === null){
+        let product = {
+          id: item.id,
+          quantity: 1
+        };
+        cartItems.push(product);
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+      }
+      else{
+        let cartItems = JSON.parse(cart);
+        let test = cartItems.findIndex(product => product.id === item.id);
+        if(test < 0) {
+          let product = {
+            id: item.id,
+            quantity: 1
+          };
+          let newCart = [...cartItems, product];
+          localStorage.setItem('cart', JSON.stringify(newCart));
+        }
+        else{
+          let newCart = [...cartItems];
+          newCart[test].quantity += 1;
+          localStorage.setItem('cart', JSON.stringify(newCart));
+        }
+       
+      }
+    }
+
+    return (
+      
       <Container>
         <Row>
-
           {
             products.length > 0 && products.map((product, index) => (
               <Col md="3">
@@ -36,6 +70,7 @@ class ProductList extends Component {
                     <CardTitle key={index} tag="h5">{product.productName}</CardTitle>
                     <CardText>{product.productDescription}</CardText>
                     <Button>Button</Button>
+                    <Button color="success" onClick={() => handleAddToCart(product)}>Add to cart</Button>
                   </CardBody>
                 </Card>
               </Col>
