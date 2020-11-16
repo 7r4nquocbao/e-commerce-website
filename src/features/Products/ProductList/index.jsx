@@ -1,6 +1,12 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { Col, Button, Card, CardBody, CardImg, CardText, CardTitle, Container, Row } from 'reactstrap';
+import { Col, Container, Row } from 'reactstrap';
+import { Link } from 'react-router-dom';
+
+import Images from '../../../constants/Image';
+import './ProductList.scss';
+
+
 
 
 class ProductList extends Component {
@@ -23,35 +29,30 @@ class ProductList extends Component {
   render() {
     const { products } = this.state;
     return (
-
       <Container>
         <Row>
-
           {
             products.length > 0 && products.map((product, index) => (
-              <Col md="3">
-                <Card>
-                  <CardImg top width="100%" src="https://i1-giaitri.vnecdn.net/2020/11/11/sonyejinava-1605087025-6323-1605087144.jpg?w=300&h=180&q=100&dpr=1&fit=crop&s=gCmfGtI0uaz9jCegx8us-A" alt="Card image cap" />
-                  <CardBody>
-                    <CardTitle key={index} tag="h5">{product.productName}</CardTitle>
-                    <CardText>{product.productDescription}</CardText>
-                    <Button>Button</Button>
-                  </CardBody>
-                </Card>
+              <Col lg="3" md="4" sm="6" xs="12">
+                <div className="product">
+                  <div className="product__image">
+                    <Link to="">
+                      <img src={Images.PRODUCT} />
+                    </Link>
+                  </div>
+                  <div className="product__info">
+                    <div className="product__info__title">{product.productName}</div>
+                    <div className="product__info__price">{product.productPrice}</div>
+                  </div>
+
+                </div>
               </Col>
             ))
 
           }
-          <div className="product">
-            <div className="product__image"></div>
-            <div className="product__title"></div>
-            <div className="product__price"></div>
-
-          </div>
-
-
         </Row>
-      </Container>
+
+      </Container >
 
     )
   }
