@@ -26,12 +26,12 @@ function Banner(props) {
     <div className="banner" style={backgroundStyle}>
       <div className="banner__opacity">
         <div className="banner__info">
-          <div className="banner__info__title">
+          {title && <div className="banner__info__title">
             {title}
-          </div>
-          <div className="banner__info__description">
+          </div>}
+          {description && <div className="banner__info__description">
             {description}
-          </div>
+          </div>}
           <div className="button">
             <Link to="">Learn more</Link>
           </div>

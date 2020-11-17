@@ -7,7 +7,7 @@ import NotFound from './components/NotFound';
 import Header from './components/Header';
 import TopMenu from './components/TopMenu';
 
-const Home = React.lazy(() => import('./pages/Home'));
+const Home = React.lazy(() => import('./features/Home'));
 const Login = React.lazy(() => import('./features/Authentication/Login'))
 const Register = React.lazy(() => import('./features/Authentication/Register'))
 const Search = React.lazy(() => import('./features/Search'))
@@ -19,7 +19,7 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <BrowserRouter>
           <Header />
-          <TopMenu />
+
           <Switch>
 
             <Route exact path="/" component={Home}/>
@@ -32,7 +32,6 @@ function App() {
 
         </BrowserRouter>
       </Suspense>
-
 
     </div>
   );
