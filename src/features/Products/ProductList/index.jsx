@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Button, Col, Container, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import firebase from '../../../app/FirebaseConnect';
 
 import Images from '../../../constants/Image';
 import './ProductList.scss';
@@ -28,8 +29,7 @@ class ProductList extends Component {
   }
   render() {
     const { products } = this.state;
-    console.log(this.state.products)
-
+    console.log(firebase);
     function handleAddToCart(item){
       let cartItems = [];
       let cart = localStorage.getItem('cart');

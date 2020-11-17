@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
+import firebaseDb from './FirebaseConnect';
 
 let data = axios.get('https://jkbc8.sse.codesandbox.io/products')
 .then(res => res.data)
@@ -13,5 +14,4 @@ const productSlice = createSlice({
     }
 })
 
-export const { getData } = productSlice.actions;
 export default productSlice.reducer;

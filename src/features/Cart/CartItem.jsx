@@ -57,7 +57,6 @@ function CartItem(props) {
                     return(
                         <div>
                             <h4 key={index}>{JSON.stringify(getItemById(item.id))}</h4>
-        
                             <Form inline>
                                 <FormGroup >
                                     <Button onClick={() => handleDecreaseItem(item.id)}>-</Button>

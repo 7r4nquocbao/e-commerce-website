@@ -26,13 +26,14 @@ function App() {
               <Route exact path="/login" component={Login}/>
               <Route exact path="/register" component={Register}/>
               <Route exact path="/search" component={Search}/>
-              <Route exact path="/cart" component={Cart}/>            
+              {/* <Route exact path="/cart" component={Cart}/>             */}
               <Route component={NotFound}/>
             </Switch>          
+            <Switch>
+              <Route exact path="/cart" component={Cart}/>
+            </Switch>
         </BrowserRouter>
       </Suspense>
-
-
     </div>
   );
 }
