@@ -13,11 +13,11 @@ Title.defaultProps = {
 
 function Title(props) {
   const { title } = props;
-  const hasTitle = (title) ? <h3>{title}</h3> : 'No title'
+
   return (
     <Container>
       <div className="title">
-        <h3>{hasTitle}</h3>
+        {title}
       </div>
     </Container>
   );

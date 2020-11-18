@@ -1,17 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
-import firebaseDb from './FirebaseConnect';
-
-let data = axios.get('https://jkbc8.sse.codesandbox.io/products')
-.then(res => res.data)
-.then(data => {console.log(data); return data});
+import {db} from './firebase'
 
 const productSlice = createSlice({
     name: 'products',
-    initialState: data,
+    initialState: [],
     reducers: {
-      
+      getData(state, action){
+        state = action.payload;
+      },
     }
 })
 
-export default productSlice.reducer;
+const { actions, reducer } = productSlice;
+export const { getData } = actions;
+export default reducer;

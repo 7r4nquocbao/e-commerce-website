@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Col, Container } from 'reactstrap';
 import './TopMenu.scss';
 
 
 const TopMenu = () => {
+
+  const cart = JSON.parse(localStorage.getItem('cart'));
+  function getQuantity(){
+    let count = 0;
+    cart && cart.forEach(item => {
+      count += item.quantity
+    })
+    return count;
+  }
+
   return (
     <Container>
       <div className="menu">
@@ -72,7 +82,7 @@ const TopMenu = () => {
             >
               <i class="fas fa-shopping-cart"></i>
               <span>Cart</span>
-              <span>(0)</span>
+              <span>({getQuantity()})</span>
             </NavLink>
           </Col>
         </div>
