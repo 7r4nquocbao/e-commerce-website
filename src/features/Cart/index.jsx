@@ -99,6 +99,7 @@ function CartItem(props) {
         
         <div>
             <TopMenu/>
+            {JSON.stringify(productList)}
             {genData()}
         </div>
     );

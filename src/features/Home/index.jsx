@@ -5,7 +5,9 @@ import Title from '../../components/Title';
 import TopMenu from '../../components/TopMenu';
 import Images from '../../constants/Image';
 import ProductList from '../Products/ProductList';
-import {db} from '../../app/firebase'
+import {firestore} from '../../app/firebase'
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 Home.propTypes = {
 
@@ -13,11 +15,12 @@ Home.propTypes = {
 
 function Home(props) {
 
-  const {text} = props;
+  const user = localStorage.getItem('user');
 
   const [data, setData] = useState([]);
+
   const getProducts = async () => {
-      db.collection('products').onSnapshot((querySnapshot) => {
+    firestore.collection('products').onSnapshot((querySnapshot) => {
       const docs = [];
       querySnapshot.forEach((doc) => {
           docs.push({ ...doc.data(), id: doc.id });
@@ -32,11 +35,8 @@ function Home(props) {
 
   return (
     <div className="Home">
-
-      
-
       <TopMenu />
-      <h1>{text}</h1>
+      <h1>{user && user}</h1>
       <Banner
         title="CORSAIR"
         description="Provide gaming headsets, gaming PC cases,
@@ -54,6 +54,7 @@ function Home(props) {
         or wired computer mice to enhance your productivity 
         or unleash your creativity...."
       />
+      
       <Title title="Products 2" />
       <ProductList data={data}/>
 

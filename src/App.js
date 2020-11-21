@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import {db} from './app/firebase'
+import {db, sighIn} from './app/firebase'
 
 import './App.scss';
 
@@ -9,7 +9,7 @@ import Header from './components/Header';
 import TopMenu from './components/TopMenu';
 import { useDispatch, useSelector } from 'react-redux';
 import store from './app/store';
-import { getData, test } from './app/productSlice';
+import { getData } from './app/productSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 
 const Home = React.lazy(() => import('./features/Home'));
@@ -30,7 +30,9 @@ function App() {
       console.log(data);
   }, []);
 
-
+  // useEffect(() => {
+  //   sighIn('admin@gmail.com', 'admin@123');
+  // }, []);
 
   return (
     <div className="App">

@@ -1,15 +1,36 @@
 import { FastField, Form, Formik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'reactstrap';
 import InputField from '../../../custom-fields/InputField';
 import './Login.scss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import {fb} from '../../../app/firebase';
+import { useDispatch } from 'react-redux';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 Login.propTypes = {
 
 };
 
 function Login(props) {
+  let history = useHistory();
+
+  const signIn = async (email, password) => (
+    await fb.auth().signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        const userLogged = localStorage.getItem('user');
+        if(!userLogged){
+          localStorage.setItem('user', user.user.uid);
+        }
+        history.push('/');
+      })
+      .catch((error) => {
+        let errorCode = error.code;
+        let errorMessage = error.message;
+        alert(errorCode, errorMessage);
+        return error;
+      })
+  )
   const initialValue = {
     email: '',
     password: '',
@@ -26,9 +47,25 @@ function Login(props) {
               <div className="login__main__right__content__title">
                 Login
             </div>
-              <Formik initialValues={initialValue}>
+              <Formik initialValues={initialValue}
+                validate={values => {
+                  const errors = {};
+                  if (!values.email) {
+                    errors.email = 'Required';
+                  } else if (
+                    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                  ) {
+                    errors.email = 'Invalid email address';
+                  }
+                  return errors;
+                }}
+                  onSubmit={(values, { setSubmitting }) => {
+                    signIn(values.email, values.password);
+                  }
+                }             
+              >
                 {
-                  formikProps => {
+                  ({isSubmitting}) => {
                     return (
                       <Form>
                         <FastField
@@ -46,7 +83,7 @@ function Login(props) {
                           label="Password"
                           placeholder="password..."
                         />
-                        <Button type="submit">Login</Button>
+                        <Button type="submit" >Login</Button>
                       </Form>
                     )
                   }
@@ -56,6 +93,8 @@ function Login(props) {
                 Register in here <Link to="/register">Register</Link>
               </div>
             </div>
+            <h1>
+            </h1>
           </div>
         </div>
       </div>

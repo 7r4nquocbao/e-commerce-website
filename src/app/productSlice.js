@@ -13,11 +13,10 @@ const productSlice = createSlice({
     },
     extraReducers: {
       [getData.fulfilled]: (state, action) => {
-        state = action.payload;
+        state.push(action.payload);
       }
     }
 })
 
 const { actions, reducer } = productSlice;
-export const {test} = actions;
 export default reducer;

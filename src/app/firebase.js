@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore';
+import firebaseui from 'firebaseui';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB2JLCDhxiJyXHIo9dGk3U3y-QY79p0zr0",
@@ -11,9 +12,9 @@ const firebaseConfig = {
   appId: "1:311432037418:web:276658e4a7eeb38db06f53"
 }
 
-const fb = firebase.initializeApp(firebaseConfig);
+export const fb = firebase.initializeApp(firebaseConfig);
 
-export const db = fb.firestore();
+export const firestore = fb.firestore();
 
 // export const getProducts = async () => {
 //     db.collection('products').onSnapshot((querySnapshot) => {
@@ -26,7 +27,7 @@ export const db = fb.firestore();
 //     });
 // };
 
-export const getProducts = () => db.collection("products").get().then(function(querySnapshot) {
+export const getProducts = () => firestore.collection("products").get().then(function(querySnapshot) {
   const products = [];
   querySnapshot.forEach(function(doc) {
       // doc.data() is never undefined for query doc snapshots
@@ -35,4 +36,19 @@ export const getProducts = () => db.collection("products").get().then(function(q
   return products;
 });
 
-
+export const sighIn = (email, password) => (
+  fb.auth().signInWithEmailAndPassword(email, password)
+    .then((user) => {
+      const userLogged = localStorage.getItem('user');
+      if(!userLogged){
+        localStorage.setItem('user', user.user.uid);
+      }
+      return user.user.uid;
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      return error;
+    })
+)
