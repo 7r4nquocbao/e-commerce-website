@@ -13,6 +13,8 @@ Home.propTypes = {
 
 function Home(props) {
 
+  const {text} = props;
+
   const [data, setData] = useState([]);
   const getProducts = async () => {
       db.collection('products').onSnapshot((querySnapshot) => {
@@ -30,7 +32,11 @@ function Home(props) {
 
   return (
     <div className="Home">
+
+      
+
       <TopMenu />
+      <h1>{text}</h1>
       <Banner
         title="CORSAIR"
         description="Provide gaming headsets, gaming PC cases,

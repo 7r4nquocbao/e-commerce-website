@@ -15,14 +15,24 @@ const fb = firebase.initializeApp(firebaseConfig);
 
 export const db = fb.firestore();
 
-export const getProducts = async (target) => {
-    db.collection(target).onSnapshot((querySnapshot) => {
-    const docs = [];
-    querySnapshot.forEach((doc) => {
-        docs.push({ ...doc.data(), id: doc.id });
-    });
-    console.log(docs);
-    return docs;
-    });
-};
+// export const getProducts = async () => {
+//     db.collection('products').onSnapshot((querySnapshot) => {
+//     const docs = [];
+//     querySnapshot.forEach((doc) => {
+//         docs.push({ ...doc.data(), id: doc.id });
+//     });
+//     console.log('Da lay duoc du lieu:' , docs);
+//     return docs;
+//     });
+// };
+
+export const getProducts = () => db.collection("products").get().then(function(querySnapshot) {
+  const products = [];
+  querySnapshot.forEach(function(doc) {
+      // doc.data() is never undefined for query doc snapshots
+      products.push({...doc.data(), id: doc.id});      
+  });
+  return products;
+});
+
 

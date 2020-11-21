@@ -4,29 +4,19 @@ import { Button, Form, FormGroup, Table } from 'reactstrap';
 import {getProducts} from '../../app/firebase';
 
 import { db } from '../../app/firebase';
-import { useSelector } from 'react-redux';
-import { getData } from '../../app/productSlice';
-import ProductList from '../Products/ProductList';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchData, getData, test } from '../../app/productSlice';
 import TopMenu from '../../components/TopMenu';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 function CartItem(props) {    
 
+    const dispatch = useDispatch();
     const [data, setData] = useState([]);
+
+    const productList = useSelector(state => state.products);
+ 
     const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
-
-    const getProducts = async () => {
-        db.collection('products').onSnapshot((querySnapshot) => {
-        const docs = [];
-        querySnapshot.forEach((doc) => {
-            docs.push({ ...doc.data(), id: doc.id });
-        });
-        setData(docs);
-        });
-    };
-
-    useEffect(() => {
-        getProducts();
-    },[])
 
     function getItemById(targetId){ 
         let target = data.findIndex(item => item.id === targetId);
@@ -63,44 +53,48 @@ function CartItem(props) {
 
     function genData(){
 
-        if(cart.length > 0){
-            return(
-                <Table dark>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Product name</th>
-                            <th>Quantity</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {cart.map((item, index) => (
+        if(cart){
+            if(cart.length > 0)
+            {
+                return(
+                    <Table dark>
+                        <thead>
                             <tr>
-                                <th scope="row">{index}</th>
-                                <td>{item.Name}</td>
-                                <td><Form inline>
-                                        <FormGroup >
-                                            <Button onClick={() => handleDecreaseItem(item.id)}>-</Button>
-                                            <h4> {item.quantity} </h4>
-                                            <Button onClick={() => handleIncreaseItem(item.id)}>+</Button>
-                                        </FormGroup>
-                                    </Form>  
-                                </td>
-                                <td><Button color='danger' onClick={() => handleRemoveItem(item.id)}>Remove</Button></td>
+                                <th>#</th>
+                                <th>Product name</th>
+                                <th>Quantity</th>
+                                <th>Actions</th>
                             </tr>
-                            ))
-                        }
-                    </tbody> 
-                </Table>
-            )
-            
+                        </thead>
+                        <tbody>
+                            {cart.map((item, index) => (
+                                <tr>
+                                    <th scope="row">{index}</th>
+                                    <td>{item.Name}</td>
+                                    <td><Form inline>
+                                            <FormGroup >
+                                                <Button onClick={() => handleDecreaseItem(item.id)}>-</Button>
+                                                <h4> {item.quantity} </h4>
+                                                <Button onClick={() => handleIncreaseItem(item.id)}>+</Button>
+                                            </FormGroup>
+                                        </Form>  
+                                    </td>
+                                    <td><Button color='danger' onClick={() => handleRemoveItem(item.id)}>Remove</Button></td>
+                                </tr>
+                                ))
+                            }
+                        </tbody> 
+                    </Table>
+                )
+            }
+            else{
+                return <h2>Nothing here.</h2>
+            }
         }
         else{
             return <h2>Nothing here.</h2>
         }        
     }
-
     return (
         
         <div>

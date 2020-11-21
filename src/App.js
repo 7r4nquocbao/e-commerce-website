@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import {db, getProducts} from './app/firebase'
-import { getData } from './app/productSlice'
+import {db} from './app/firebase'
 
 import './App.scss';
 
@@ -9,6 +8,9 @@ import NotFound from './components/NotFound';
 import Header from './components/Header';
 import TopMenu from './components/TopMenu';
 import { useDispatch, useSelector } from 'react-redux';
+import store from './app/store';
+import { getData, test } from './app/productSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const Home = React.lazy(() => import('./features/Home'));
 const Login = React.lazy(() => import('./features/Authentication/Login'))
@@ -18,9 +20,19 @@ const Cart = React.lazy(() => import('./features/Cart'))
 
 
 function App() {
+  
+  const dispatch = useDispatch();
+  const [enable, setEnable] = useState(false);
 
-  return (   
+  useEffect(async () => {
+      const actionResult = await dispatch(getData());
+      const data = unwrapResult(actionResult);
+      console.log(data);
+  }, []);
 
+
+
+  return (
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
         <BrowserRouter>
@@ -35,7 +47,6 @@ function App() {
           </Switch>
         </BrowserRouter>
       </Suspense>
-
     </div>
   );
 }

@@ -26,10 +26,8 @@ function ProductList(props) {
   // },[]);
 
   const {data} = props;
-  const [count, setCount] = useState(0);
 
   function handleAddToCart(item){
-    setCount(count + 1);
     let cartItems = [];
     let cart = localStorage.getItem('cart');
     if(cart === null){

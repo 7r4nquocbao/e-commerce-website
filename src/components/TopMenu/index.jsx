@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Col, Container } from 'reactstrap';
 import './TopMenu.scss';
+import topLogo from '../../assets/images/logo-no-title.png';
 
 
 const TopMenu = () => {
@@ -24,7 +25,7 @@ const TopMenu = () => {
             to="/"
             className="menu__link menu__logo"
           >
-            Logo
+            <img src={topLogo} width='60px'/>
         </NavLink>
 
         </div>

@@ -6,6 +6,7 @@ export const Product = {
     Thumbnail: '',
     Images: '',
     Stock: 0,
+    InputDate: '',
     idCategory: '',
     idBrand: ''
 }
