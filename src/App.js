@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import store from './app/store';
 import { getData } from './app/productSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import Checkout from './features/Cart/pages/Checkout';
 
 const Home = React.lazy(() => import('./features/Home'));
 const Login = React.lazy(() => import('./features/Authentication/Login'))
@@ -39,12 +40,19 @@ function App() {
           <Header />
           <Switch>
             <Route exact path="/" component={Home}/>
+<<<<<<< HEAD
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
             <Route exact path="/search" component={Search}/>
             <Route exact path="/cart" component={Cart}/>
             <Route exact path="/admin-product" component={AdminProduct}/>
             <Route exact path="/profile" component={Profile}/>
+=======
+            <Route  path="/login" component={Login}/>
+            <Route  path="/register" component={Register}/>
+            <Route  path="/search" component={Search}/>
+            <Route  path="/cart" component={Cart}/>
+>>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372
             <Route component={NotFound}/>
           </Switch>
         </BrowserRouter>

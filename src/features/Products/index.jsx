@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, FormGroup, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
+<<<<<<< HEAD:src/features/Products/index.jsx
 import { db } from '../../app/firebase';
 import {Product} from '../../models/ProductModel'
+=======
+import { db } from '../../../app/firebase';
+import { Product } from '../../../models/Product'
+>>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372:src/features/Products/ProductList/index.jsx
 
 import Images from '../../constants/Image';
 import './Product.scss';
@@ -24,13 +29,17 @@ function ProductList(props) {
   //     getProducts();
   // },[]);
 
+<<<<<<< HEAD:src/features/Products/index.jsx
   const {product} = props;
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
+=======
+  const { data } = props;
+>>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372:src/features/Products/ProductList/index.jsx
 
-  function handleAddToCart(item){
+  function handleAddToCart(item) {
     let cartItems = [];
     let cart = localStorage.getItem('cart');
-    if(cart === null){
+    if (cart === null) {
       let product = {
         ...item,
         quantity: 1
@@ -39,10 +48,10 @@ function ProductList(props) {
       localStorage.setItem('cart', JSON.stringify(cartItems));
       setCart(cartItems);
     }
-    else{
+    else {
       let cartItems = JSON.parse(cart);
       let test = cartItems.findIndex(product => product.id === item.id);
-      if(test < 0) {
+      if (test < 0) {
         let product = {
           ...item,
           quantity: 1
@@ -51,14 +60,14 @@ function ProductList(props) {
         localStorage.setItem('cart', JSON.stringify(newCart));
         setCart(cartItems);
       }
-      else{
+      else {
         let newCart = [...cartItems];
         newCart[test].quantity += 1;
         localStorage.setItem('cart', JSON.stringify(newCart));
         setCart(cartItems);
       }
     }
-    
+
   }
 
   // function handleAddProduct(){
@@ -82,8 +91,9 @@ function ProductList(props) {
   //       console.error("Error adding document: ", error);
   //   });
   // }
-  
+
   return (
+<<<<<<< HEAD:src/features/Products/index.jsx
       <Col lg="3" md="4" sm="6" xs="12">
         <div className="product">
           <div className="product__image">
@@ -98,6 +108,36 @@ function ProductList(props) {
         </div>
         <Button color="primary" onClick={() => handleAddToCart(product)}>Add to cart</Button>
       </Col>
+=======
+
+    <Container>
+      <Row>
+        {
+          data.length > 0 && data.map((product, index) => (
+            <Col lg="3" md="4" sm="6" xs="12">
+              <div className="product">
+                <div className="product__image">
+                  <Link to="">
+                    <img src={product.Thumbnail} />
+                  </Link>
+                </div>
+                <div className="product__info">
+                  <div className="product__info__title">{product.Name}</div>
+                  <div className="product__info__price">{`${product.InputCost}$`}</div>
+                  <div
+                    className="product__info__button"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Add to cart
+                  </div>
+                </div>
+              </div>
+            </Col>
+          ))
+        }
+      </Row>
+    </Container >
+>>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372:src/features/Products/ProductList/index.jsx
   );
 
 }

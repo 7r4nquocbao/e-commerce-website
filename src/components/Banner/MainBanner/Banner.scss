@@ -40,11 +40,12 @@ $transition: all 0.5s ease-in-out;
     margin-left: 2rem;
     display: none;
 
+    position: absolute;
+    bottom: 10%;
+
     font-family: 'Quicksand';
 
     &__title {
-      position: absolute;
-      top: 60%;
   
       font-size: 4rem;
       font-weight: bold;
@@ -52,8 +53,6 @@ $transition: all 0.5s ease-in-out;
       color: $colorWold;
     }
     &__description {
-      position: absolute;
-      top: 70%;
 
       width: 50%;
   
@@ -64,9 +63,8 @@ $transition: all 0.5s ease-in-out;
     }
     .button {
       display: none;
-      position: absolute;
-      top: 80%;
 
+      width: 13rem;
 
       padding: 0.5rem 2rem;
 
