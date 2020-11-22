@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import {db, sighIn} from './app/firebase'
+import {db, fb, sighIn} from './app/firebase'
 
 import './App.scss';
 
@@ -17,6 +17,8 @@ const Login = React.lazy(() => import('./features/Authentication/Login'))
 const Register = React.lazy(() => import('./features/Authentication/Register'))
 const Search = React.lazy(() => import('./features/Search'))
 const Cart = React.lazy(() => import('./features/Cart'))
+const AdminProduct = React.lazy(() => import('./features/Admin/Admin-Product'))
+const Profile = React.lazy(() => import('./features/Authentication/Profile'))
 
 
 function App() {
@@ -30,10 +32,6 @@ function App() {
       console.log(data);
   }, []);
 
-  // useEffect(() => {
-  //   sighIn('admin@gmail.com', 'admin@123');
-  // }, []);
-
   return (
     <div className="App">
       <Suspense fallback={<div>Loading...</div>}>
@@ -45,6 +43,8 @@ function App() {
             <Route exact path="/register" component={Register}/>
             <Route exact path="/search" component={Search}/>
             <Route exact path="/cart" component={Cart}/>
+            <Route exact path="/admin-product" component={AdminProduct}/>
+            <Route exact path="/profile" component={Profile}/>
             <Route component={NotFound}/>
           </Switch>
         </BrowserRouter>

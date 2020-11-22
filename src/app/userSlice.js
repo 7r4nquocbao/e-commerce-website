@@ -11,10 +11,18 @@ export const dangNhap = createAsyncThunk('dangNhap', async(account, thunkAPI) =>
 const userSlice = createSlice({
     name: 'users',
     initialState: {
-        users: [],
+        users: {},
         currentUser: ''
     },
     reducers: {
+      saveUser: (state, action) => {
+        state.currentUser = action.payload.uid;
+        state.users  = action.payload;
+      },
+      removeUser: (state, action) => {
+        state.users = {};
+        state.currentUser = '';
+      }
     },
     extraReducers: {
       [dangNhap.fulfilled]: (state, action) => {
@@ -24,4 +32,5 @@ const userSlice = createSlice({
 })
 
 const { actions, reducer } = userSlice;
+export const { saveUser, removeUser } = actions;
 export default reducer;

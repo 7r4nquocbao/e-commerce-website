@@ -1,4 +1,4 @@
-export const Product = {
+export const ProductModel = {
     Name: '',
     InputCost: 0,
     Profit: 0,
@@ -8,5 +8,6 @@ export const Product = {
     Stock: 0,
     InputDate: '',
     idCategory: '',
-    idBrand: ''
+    idBrand: '',
+    isEnabled: true
 }

@@ -1,15 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './Header.scss';
 
 import { Col } from 'reactstrap';
 import { Link, NavLink } from 'react-router-dom';
+import { fb } from '../../app/firebase';
 
 Header.propTypes = {
 
 };
 
 function Header(props) {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        fb.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              setIsLoggedIn(true);
+            } else {
+              // No user is signed in.
+            }
+          });
+    })
+
+    const logOut = () => {
+        fb.auth().signOut().then(function() {
+            localStorage.clear();
+        }).catch(function(error) {
+        // An error happened.
+        });
+        localStorage.removeItem('user');
+        setIsLoggedIn(false);
+    }
+
     return (
 
         <div className="header">
@@ -25,7 +49,11 @@ function Header(props) {
             </Col>
             <Col sm="auto">
                 <div className="header__authentication">
-                    <NavLink to="/login">Login</NavLink><span>/</span>
+                    {
+                        !isLoggedIn ? <NavLink to="/login">Login</NavLink>
+                        : <NavLink to='' onClick={logOut}>Log out</NavLink>
+                    }
+                    <span>/</span>
                     <NavLink to="/register">Register</NavLink>
                 </div>
 

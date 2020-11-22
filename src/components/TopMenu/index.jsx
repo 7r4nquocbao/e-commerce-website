@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Col, Container } from 'reactstrap';
+import { Badge, Col, Container } from 'reactstrap';
 import './TopMenu.scss';
 import topLogo from '../../assets/images/logo-no-title.png';
 
 
 const TopMenu = () => {
 
-  const cart = JSON.parse(localStorage.getItem('cart'));
   function getQuantity(){
+    const cart = JSON.parse(localStorage.getItem('cart'));
     let count = 0;
     cart && cart.forEach(item => {
       count += item.quantity
@@ -54,7 +54,7 @@ const TopMenu = () => {
           <Col sm="auto">
             <NavLink
               exact
-              to="/"
+              to="/Profile"
               className="menu__link menu__hasSub"
               activeClassName="menu__link--active"
             >
@@ -83,7 +83,7 @@ const TopMenu = () => {
             >
               <i class="fas fa-shopping-cart"></i>
               <span>Cart</span>
-              <span>({getQuantity()})</span>
+              <Badge color="danger" pill>{getQuantity()}</Badge>
             </NavLink>
           </Col>
         </div>

@@ -1,9 +1,9 @@
 import { FastField, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
-import { Container, FormGroup, Input } from 'reactstrap';
+import { Container, FormGroup, Input, Row } from 'reactstrap';
 import TopMenu from '../../components/TopMenu';
 import { firestore } from '../../app/firebase';
-import ProductList from '../Products/ProductList';
+import Product from '../Products';
 Search.propTypes = {
 
 };
@@ -30,6 +30,22 @@ function Search(props) {
     return item.Name.toLowerCase().includes(search.toLowerCase());
   })
 
+  const displayData = (arr) => {
+    return(
+      <Container>
+        <Row>
+          {
+            arr.map((item, index) => {
+            return(
+                <Product product={item} key={index}/>
+              )
+            })
+          }
+        </Row>
+      </Container>
+    )
+  }
+
   return (
     <div className="search">
       <TopMenu />
@@ -39,7 +55,7 @@ function Search(props) {
         </FormGroup>
       </Container>
       {
-        <ProductList data={dataFiltered}/>
+        displayData(dataFiltered)
       }
     </div>
   );

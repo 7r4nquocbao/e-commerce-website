@@ -1,12 +1,11 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, FormGroup, Row } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { db } from '../../../app/firebase';
-import {Product} from '../../../models/Product'
+import { db } from '../../app/firebase';
+import {Product} from '../../models/ProductModel'
 
-import Images from '../../../constants/Image';
-import './ProductList.scss';
+import Images from '../../constants/Image';
+import './Product.scss';
 
 function ProductList(props) {
 
@@ -25,7 +24,8 @@ function ProductList(props) {
   //     getProducts();
   // },[]);
 
-  const {data} = props;
+  const {product} = props;
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
 
   function handleAddToCart(item){
     let cartItems = [];
@@ -37,6 +37,7 @@ function ProductList(props) {
       };
       cartItems.push(product);
       localStorage.setItem('cart', JSON.stringify(cartItems));
+      setCart(cartItems);
     }
     else{
       let cartItems = JSON.parse(cart);
@@ -48,11 +49,13 @@ function ProductList(props) {
         };
         let newCart = [...cartItems, product];
         localStorage.setItem('cart', JSON.stringify(newCart));
+        setCart(cartItems);
       }
       else{
         let newCart = [...cartItems];
         newCart[test].quantity += 1;
         localStorage.setItem('cart', JSON.stringify(newCart));
+        setCart(cartItems);
       }
     }
     
@@ -81,29 +84,20 @@ function ProductList(props) {
   // }
   
   return (
-    
-    <Container>
-    <Row>
-      {
-        data.length > 0 && data.map((product, index) => (
-          <Col lg="3" md="4" sm="6" xs="12">
-            <div className="product">
-              <div className="product__image">
-                <Link to="">
-                  <img src={product.Thumbnail} />
-                </Link>
-              </div>
-              <div className="product__info">
-                <div className="product__info__title">{product.Name}</div>
-                <div className="product__info__price">{product.InputCost}</div>
-              </div>                  
-            </div>
-            <Button color="primary" onClick={() => handleAddToCart(product)}>Add to cart</Button>
-          </Col>
-        ))
-      }
-      </Row>
-    </Container >
+      <Col lg="3" md="4" sm="6" xs="12">
+        <div className="product">
+          <div className="product__image">
+            <Link to="">
+              <img src={product.Thumbnail} />
+            </Link>
+          </div>
+          <div className="product__info">
+            <div className="product__info__title">{product.Name}</div>
+            <div className="product__info__price">{product.InputCost}</div>
+          </div>                  
+        </div>
+        <Button color="primary" onClick={() => handleAddToCart(product)}>Add to cart</Button>
+      </Col>
   );
 
 }
