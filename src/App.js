@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import {db, fb, sighIn} from './app/firebase'
+import {db, fb, firestore, sighIn} from './app/firebase'
 
 import './App.scss';
 
@@ -12,6 +12,8 @@ import store from './app/store';
 import { getData } from './app/productSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import Checkout from './features/Cart/pages/Checkout';
+import { adminRoleId } from './models/Role';
+import { setAdmin, setLogged } from './app/userSlice';
 
 const Home = React.lazy(() => import('./features/Home'));
 const Login = React.lazy(() => import('./features/Authentication/Login'))
@@ -20,17 +22,39 @@ const Search = React.lazy(() => import('./features/Search'))
 const Cart = React.lazy(() => import('./features/Cart'))
 const AdminProduct = React.lazy(() => import('./features/Admin/Admin-Product'))
 const Profile = React.lazy(() => import('./features/Authentication/Profile'))
+const InputProduct = React.lazy(() => import('./features/Admin/AdminInputProduct'))
 
 
 function App() {
   
   const dispatch = useDispatch();
-  const [enable, setEnable] = useState(false);
 
-  useEffect(async () => {
-      const actionResult = await dispatch(getData());
-      const data = unwrapResult(actionResult);
-      console.log(data);
+  useEffect(() => {
+
+      dispatch(getData());
+
+      fb.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          dispatch(setLogged(true));
+          firestore.collection('role-user').get().then(function(querySnapshot) {
+            const list = [];
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                list.push({...doc.data(), id: doc.id});      
+            });
+            if(adminRoleId !== list[list.findIndex(role => role.user === user.uid)].role){
+              console.log(adminRoleId, list[list.findIndex(role => role.user === user.uid)].role);
+              dispatch(setAdmin(false));
+            }
+            else{
+              console.log(adminRoleId, list[list.findIndex(role => role.user === user.uid)].role);
+              dispatch(setAdmin(true));
+            }
+          });
+        } else {
+          dispatch(setLogged(false));
+        }
+      });
   }, []);
 
   return (
@@ -40,19 +64,13 @@ function App() {
           <Header />
           <Switch>
             <Route exact path="/" component={Home}/>
-<<<<<<< HEAD
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
             <Route exact path="/search" component={Search}/>
             <Route exact path="/cart" component={Cart}/>
             <Route exact path="/admin-product" component={AdminProduct}/>
+            <Route exact path="/admin-input-product" component={InputProduct}/>
             <Route exact path="/profile" component={Profile}/>
-=======
-            <Route  path="/login" component={Login}/>
-            <Route  path="/register" component={Register}/>
-            <Route  path="/search" component={Search}/>
-            <Route  path="/cart" component={Cart}/>
->>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372
             <Route component={NotFound}/>
           </Switch>
         </BrowserRouter>

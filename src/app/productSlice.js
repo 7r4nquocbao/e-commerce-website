@@ -13,7 +13,13 @@ const productSlice = createSlice({
     },
     extraReducers: {
       [getData.fulfilled]: (state, action) => {
-        state.push(action.payload);
+        if(state.length > 0){
+
+        }
+        else{
+          state.push(action.payload);
+        }
+        
       }
     }
 })

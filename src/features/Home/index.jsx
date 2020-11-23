@@ -5,11 +5,13 @@ import Title from '../../components/Title';
 import TopMenu from '../../components/TopMenu';
 import Images from '../../constants/Image';
 import {firestore} from '../../app/firebase'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Product from '../Products';
 import { Button, Container, Row } from 'reactstrap';
 import {ProductModel} from './../../models/ProductModel'
+import { unwrapResult } from '@reduxjs/toolkit';
+import { getData } from '../../app/productSlice';
 
 Home.propTypes = {
 
@@ -19,15 +21,21 @@ function Home(props) {
 
   const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    firestore.collection("products").get().then(function(querySnapshot) {
-      const products = [];
-      querySnapshot.forEach(function(doc) {
-          // doc.data() is never undefined for query doc snapshots
-          products.push({...doc.data(), id: doc.id});      
-      });
-      setProducts(products);
-    });
+  // useEffect(() => {
+  //   firestore.collection("products").get().then(function(querySnapshot) {
+  //     const products = [];
+  //     querySnapshot.forEach(function(doc) {
+  //         // doc.data() is never undefined for query doc snapshots
+  //         products.push({...doc.data(), id: doc.id});      
+  //     });
+  //     setProducts(products);
+  //   });
+  // }, []);
+
+  const dispatch = useDispatch();
+  useEffect(async () => {
+      const actionResult = await dispatch(getData());
+      setProducts(unwrapResult(actionResult));
   }, []);
 
   const displayData = () => {

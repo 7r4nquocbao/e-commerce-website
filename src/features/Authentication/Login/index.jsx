@@ -5,50 +5,34 @@ import InputField from '../../../custom-fields/InputField';
 import './Login.scss';
 import { Link, useHistory } from 'react-router-dom';
 import {fb, firestore} from '../../../app/firebase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators, unwrapResult } from '@reduxjs/toolkit';
-import { saveUser } from '../../../app/userSlice';
+import { saveUser, setLogged } from '../../../app/userSlice';
 
 Login.propTypes = {
 
 };
 
 function Login(props) {
+
   let history = useHistory();
   const dispatch = useDispatch();
 
+  const logged = useSelector(state => state.users.isLogged);
+
   const [roles, setRoles] = useState([{id: '', role: ''}]);
   const [roleUser, setRoleUser] = useState([{id: '', role: '', user: ''}]);
-  const [userLoggedIn, setUserLoggedIn] = useState([]);
 
   useEffect(() => {
 
-    const ac = new AbortController();
-
-    if(getRole(userLoggedIn.uid) !== ''){
-      if(getRole(userLoggedIn.uid) === 'Administrator'){
-        history.push('/admin-product');
-      }
-      else{
-        history.push('/');
-      }
-    }
-
-    return () => ac.abort();
-    
-  }, [userLoggedIn]);
-
-  useEffect(() => {
     fb.auth().onAuthStateChanged(function(user) {
       if (user) {
-        setUserLoggedIn(user);
+        dispatch(setLogged(true));
       } else {
-        // No user is signed in.
+        dispatch(setLogged(false));
       }
     });
-  })
 
-  const getRole = (uid) => {
     firestore.collection('roles').get().then(function(querySnapshot) {
       const roles = [];
       querySnapshot.forEach(function(doc) {
@@ -66,22 +50,22 @@ function Login(props) {
       });
       setRoleUser(roleUser);
     });
+    
+    
 
-    console.log(roles, roleUser);
-
-    if(roles[0].role !== '' && roleUser[0].role !== ''){
-      const roleIs = roleUser[roleUser.findIndex(role => role.user === uid)].role;
-      const roleNameIs = roles[roles.findIndex(role => role.id === roleIs)].role;
-      
-      return roleNameIs;
-    }
-    return '';
-  }
+  }, [])
 
   const signIn = (email, password) => (
     fb.auth().signInWithEmailAndPassword(email, password)
       .then((user) => {
-        setUserLoggedIn(user.user);
+        const roleIs = roleUser[roleUser.findIndex(role => role.user === user.user.uid)].role;
+        const roleNameIs = roles[roles.findIndex(role => role.id === roleIs)].role;
+        if(roleNameIs === 'Administrator') {
+          history.push('/admin-product');
+        }
+        else{
+          history.push('/');
+        }
       })
       .catch((error) => {
         let errorCode = error.code;
@@ -95,8 +79,9 @@ function Login(props) {
     password: '',
   }
 
-  if(!userLoggedIn) {
+  if(logged === false) {
     return (
+
       <div className="login">
         <div className="login__opacity">
           <div className="login__main">
@@ -160,7 +145,7 @@ function Login(props) {
           </div>
         </div>
       </div>
-    );
+    )
   }
   else {
     return(
