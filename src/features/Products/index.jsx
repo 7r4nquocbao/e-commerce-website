@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, FormGroup, Row } from 'reactstrap';
-import { Link } from 'react-router-dom';
-<<<<<<< HEAD:src/features/Products/index.jsx
+import { Link, Route, Switch } from 'react-router-dom';
 import { db } from '../../app/firebase';
-import {Product} from '../../models/ProductModel'
-=======
-import { db } from '../../../app/firebase';
-import { Product } from '../../../models/Product'
->>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372:src/features/Products/ProductList/index.jsx
+import { Product } from '../../models/ProductModel'
 
 import Images from '../../constants/Image';
 import './Product.scss';
+import Details from './pages/Details';
 
 function ProductList(props) {
 
@@ -29,12 +25,8 @@ function ProductList(props) {
   //     getProducts();
   // },[]);
 
-<<<<<<< HEAD:src/features/Products/index.jsx
-  const {product} = props;
+  const { product } = props;
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
-=======
-  const { data } = props;
->>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372:src/features/Products/ProductList/index.jsx
 
   function handleAddToCart(item) {
     let cartItems = [];
@@ -93,51 +85,31 @@ function ProductList(props) {
   // }
 
   return (
-<<<<<<< HEAD:src/features/Products/index.jsx
+    <div>
       <Col lg="3" md="4" sm="6" xs="12">
         <div className="product">
           <div className="product__image">
-            <Link to="">
+            <Link to="/details">
               <img src={product.Thumbnail} />
             </Link>
           </div>
           <div className="product__info">
             <div className="product__info__title">{product.Name}</div>
             <div className="product__info__price">{product.InputCost}</div>
-          </div>                  
-        </div>
-        <Button color="primary" onClick={() => handleAddToCart(product)}>Add to cart</Button>
-      </Col>
-=======
-
-    <Container>
-      <Row>
-        {
-          data.length > 0 && data.map((product, index) => (
-            <Col lg="3" md="4" sm="6" xs="12">
-              <div className="product">
-                <div className="product__image">
-                  <Link to="">
-                    <img src={product.Thumbnail} />
-                  </Link>
-                </div>
-                <div className="product__info">
-                  <div className="product__info__title">{product.Name}</div>
-                  <div className="product__info__price">{`${product.InputCost}$`}</div>
-                  <div
-                    className="product__info__button"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    Add to cart
+            <div
+              className="product__info__button"
+              onClick={() => handleAddToCart(product)}
+            >
+              Add to cart
                   </div>
-                </div>
-              </div>
-            </Col>
-          ))
-        }
-      </Row>
-    </Container >
->>>>>>> deb4121b89622409dfad7ea4e8eb22971759f372:src/features/Products/ProductList/index.jsx
+          </div>
+        </div>
+      </Col>
+      <Switch>
+        <Route path="/:productID" component={Details} />
+      </Switch>
+    </div>
+
   );
 
 }
