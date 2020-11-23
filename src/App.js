@@ -12,8 +12,12 @@ import store from './app/store';
 import { getData } from './app/productSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import Checkout from './features/Cart/pages/Checkout';
+<<<<<<< HEAD
 import { adminRoleId } from './models/Role';
 import { setAdmin, setLogged } from './app/userSlice';
+=======
+import Details from './features/Products/pages/Details';
+>>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
 
 const Home = React.lazy(() => import('./features/Home'));
 const Login = React.lazy(() => import('./features/Authentication/Login'))
@@ -71,6 +75,10 @@ function App() {
             <Route exact path="/admin-product" component={AdminProduct}/>
             <Route exact path="/admin-input-product" component={InputProduct}/>
             <Route exact path="/profile" component={Profile}/>
+<<<<<<< HEAD
+=======
+            <Route exact path="/details" component={Details}/>
+>>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
             <Route component={NotFound}/>
           </Switch>
         </BrowserRouter>

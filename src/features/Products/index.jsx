@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, FormGroup, Row } from 'reactstrap';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 import { db } from '../../app/firebase';
 import {Product} from '../../models/ProductModel'
+=======
+import { Link, Route, Switch } from 'react-router-dom';
+import { db } from '../../app/firebase';
+import { Product } from '../../models/ProductModel'
+>>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
 
 import Images from '../../constants/Image';
 import './Product.scss';
+import Details from './pages/Details';
 
 function ProductList(props) {
 
@@ -24,7 +31,11 @@ function ProductList(props) {
   //     getProducts();
   // },[]);
 
+<<<<<<< HEAD
   const {product} = props;
+=======
+  const { product } = props;
+>>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
 
   function handleAddToCart(item) {
@@ -84,20 +95,37 @@ function ProductList(props) {
   // }
 
   return (
+<<<<<<< HEAD
+=======
+    <div>
+>>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
       <Col lg="3" md="4" sm="6" xs="12">
         <div className="product">
           <div className="product__image">
-            <Link to="">
+            <Link to="/details">
               <img src={product.Thumbnail} />
             </Link>
           </div>
           <div className="product__info">
             <div className="product__info__title">{product.Name}</div>
             <div className="product__info__price">{product.InputCost}</div>
-          </div>                  
+            <div
+              className="product__info__button"
+              onClick={() => handleAddToCart(product)}
+            >
+              Add to cart
+                  </div>
+          </div>
         </div>
-        <Button color="primary" onClick={() => handleAddToCart(product)}>Add to cart</Button>
       </Col>
+<<<<<<< HEAD
+=======
+      <Switch>
+        <Route path="/:productID" component={Details} />
+      </Switch>
+    </div>
+
+>>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
   );
 
 }

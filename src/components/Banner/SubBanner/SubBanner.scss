@@ -1,87 +1,27 @@
 .subBanner {
   width: 100%;
-  height: 450px;
+  height: 50vh;
 
   display: flex;
+  justify-content: center;
+  align-items: center;
 
-  margin-bottom: 1rem;
+  background-image: url("../../../assets/images/sub.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   
-  &__1{
-    width: 60%;
-    height: 450px;
 
-    position: relative;
-
-    margin-right: 1rem;
-  
-    background-image: url('../../../assets/images/subBanner3.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    &__opacity1 {
-      width: 100%;
-      height: 450px;
-
-      transition: all 0.5s ease-in-out;
-
-    }      
-    &:hover &__opacity1{
-      background-color: rgba($color: #000000, $alpha: 0.5);
-    }
-    &:hover .button1 {
-      display: block;
-    }
+  &__title {
+    font-size: 3rem;
+    font-family: "Poppins";
+    font-weight: bold;
+    letter-spacing: 7px;
     
-  }
-  &__2 {
-    width: 40%;
-    height: 450px;
 
-    position: relative;
-
-    background-image: url('../../../assets/images/subBanner2.jpg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    &__opacity2 {
-      width: 100%;
-      height: 450px;
-
-      transition: all 0.5s ease-in-out;
-
-    }      
-    &:hover &__opacity2{
-      background-color: rgba($color: #000000, $alpha: 0.5);
-    }
-    &:hover .button1 {
-      display: block;
-    }
-    
+    color: #AAA;
   }
 }
-.button1 {
-  display: none;
-  position: absolute;
-  top:45%;
-  right:45%;
 
-  padding: 0.3rem 1.5rem;
-
-  font-size: 1.5rem;
-  font-family: "Poppins";
-  font-weight: bold;
-  color: #f0245e;
-
-  border: 1px solid white;
-  border-radius: 1rem;
-  transition: all 0.5s ease-in-out;
-
-  &:hover{
-    color: rgba($color: #000000, $alpha: 0.7);
-    background-color: rgba($color: #FFFFFF, $alpha: 0.5);
-  }
-}
  
