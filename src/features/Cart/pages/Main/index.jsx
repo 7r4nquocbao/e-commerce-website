@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { Button, Container, Table } from 'reactstrap';
+import TopMenu from '../../../../components/TopMenu';
 import './Cart.scss';
 
 
@@ -102,7 +103,7 @@ function CartItem(props) {
                   <p>Total : { }</p>
                 </div>
                 <div className="checkout__button">
-                  <Link to={`${match.url}/checkout`}>Check out</Link>
+                  <Link to="cart/checkout">Check out</Link>
                 </div>
 
               </div>
@@ -122,10 +123,9 @@ function CartItem(props) {
     }
   }
 
-  const match = useRouteMatch();
-  console.log(match);
   return (
     <div>
+      <TopMenu />
       {genData()}
       {JSON.stringify(productList)}
     </div>

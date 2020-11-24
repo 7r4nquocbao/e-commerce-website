@@ -4,6 +4,8 @@ import { Container, FormGroup, Input, Row } from 'reactstrap';
 import TopMenu from '../../components/TopMenu';
 import { firestore } from '../../app/firebase';
 import Product from '../Products';
+import ProductList from '../Products';
+import ProductCard from '../Products/components/ProductCard';
 Search.propTypes = {
 
 };
@@ -16,28 +18,28 @@ function Search(props) {
     firestore.collection('products').onSnapshot((querySnapshot) => {
       const docs = [];
       querySnapshot.forEach((doc) => {
-          docs.push({ ...doc.data(), id: doc.id });
+        docs.push({ ...doc.data(), id: doc.id });
       });
       setData(docs);
-      });
+    });
   };
 
   useEffect(() => {
-      getProducts();
-  },[]);
+    getProducts();
+  }, []);
 
   const dataFiltered = data.filter(item => {
     return item.Name.toLowerCase().includes(search.toLowerCase());
   })
 
   const displayData = (arr) => {
-    return(
+    return (
       <Container>
         <Row>
           {
             arr.map((item, index) => {
-            return(
-                <Product product={item} key={index}/>
+              return (
+                <ProductCard product={item} key={index} />
               )
             })
           }
@@ -51,7 +53,7 @@ function Search(props) {
       <TopMenu />
       <Container>
         <FormGroup>
-          <Input type="text" placeholder="Typing to search" onChange={(event) => setSearch(event.target.value)}/>
+          <Input type="text" placeholder="Typing to search" onChange={(event) => setSearch(event.target.value)} />
         </FormGroup>
       </Container>
       {

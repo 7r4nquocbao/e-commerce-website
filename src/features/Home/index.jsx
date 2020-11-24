@@ -4,23 +4,16 @@ import Footer from '../../components/Footer';
 import Title from '../../components/Title';
 import TopMenu from '../../components/TopMenu';
 import Images from '../../constants/Image';
-<<<<<<< HEAD
-import {firestore} from '../../app/firebase'
+import { firestore } from '../../app/firebase'
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import Product from '../Products';
 import { Button, Container, Row } from 'reactstrap';
-import {ProductModel} from './../../models/ProductModel'
+import { ProductModel } from './../../models/ProductModel'
 import { unwrapResult } from '@reduxjs/toolkit';
 import { getData } from '../../app/productSlice';
-=======
-import { firestore } from '../../app/firebase'
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import Product from '../Products';
-import { Button, Container, Row } from 'reactstrap';
-import { ProductModel } from './../../models/ProductModel'
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
+import MainPage from '../Products/pages/Main';
+import Products from '../Products';
 
 Home.propTypes = {
 
@@ -30,23 +23,6 @@ function Home(props) {
 
   const [products, setProducts] = useState([]);
 
-<<<<<<< HEAD
-  // useEffect(() => {
-  //   firestore.collection("products").get().then(function(querySnapshot) {
-  //     const products = [];
-  //     querySnapshot.forEach(function(doc) {
-  //         // doc.data() is never undefined for query doc snapshots
-  //         products.push({...doc.data(), id: doc.id});      
-  //     });
-  //     setProducts(products);
-  //   });
-  // }, []);
-
-  const dispatch = useDispatch();
-  useEffect(async () => {
-      const actionResult = await dispatch(getData());
-      setProducts(unwrapResult(actionResult));
-=======
   useEffect(() => {
     firestore.collection("products").get().then(function (querySnapshot) {
       const products = [];
@@ -56,22 +32,24 @@ function Home(props) {
       });
       setProducts(products);
     });
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
   }, []);
 
   const displayData = () => {
     return (
-      <Container>
-        <Row>
-          {
-            products.map((item, index) => {
-              return (
-                <Product product={item} key={index} />
-              )
-            })
-          }
-        </Row>
-      </Container>
+      // <Container>
+      //   <Row>
+      //     {
+      //       products.map((item, index) => {
+      //         return (
+      //           <Product product={item} key={index} />
+      //         )
+      //       })
+      //     }
+      //   </Row>
+      // </Container>
+      <div>
+        <Products />
+      </div>
 
 
     )

@@ -1,9 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import {BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import {db, fb, firestore, sighIn} from './app/firebase'
-
-import './App.scss';
-
+import {db, fb, firestore, sighIn} from './app/firebase';
 import NotFound from './components/NotFound';
 import Header from './components/Header';
 import TopMenu from './components/TopMenu';
@@ -12,12 +9,10 @@ import store from './app/store';
 import { getData } from './app/productSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 import Checkout from './features/Cart/pages/Checkout';
-<<<<<<< HEAD
 import { adminRoleId } from './models/Role';
 import { setAdmin, setLogged } from './app/userSlice';
-=======
 import Details from './features/Products/pages/Details';
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
+import './App.scss';
 
 const Home = React.lazy(() => import('./features/Home'));
 const Login = React.lazy(() => import('./features/Authentication/Login'))
@@ -71,15 +66,13 @@ function App() {
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
             <Route exact path="/search" component={Search}/>
-            <Route exact path="/cart" component={Cart}/>
+            <Route path="/cart" component={Cart}/>
             <Route exact path="/admin-product" component={AdminProduct}/>
             <Route exact path="/admin-input-product" component={InputProduct}/>
             <Route exact path="/profile" component={Profile}/>
-<<<<<<< HEAD
-=======
             <Route exact path="/details" component={Details}/>
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
             <Route component={NotFound}/>
+
           </Switch>
         </BrowserRouter>
       </Suspense>

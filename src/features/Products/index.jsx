@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, FormGroup, Row } from 'reactstrap';
-<<<<<<< HEAD
-import { Link } from 'react-router-dom';
-import { db } from '../../app/firebase';
-import {Product} from '../../models/ProductModel'
-=======
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { db } from '../../app/firebase';
 import { Product } from '../../models/ProductModel'
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
 
 import Images from '../../constants/Image';
-import './Product.scss';
+// import './Product.scss';
 import Details from './pages/Details';
+import MainPage from './pages/Main';
 
-function ProductList(props) {
+function Products(props) {
 
   // const [data, setData] = useState([]);
   // const getProducts = async () => {
@@ -31,46 +26,42 @@ function ProductList(props) {
   //     getProducts();
   // },[]);
 
-<<<<<<< HEAD
-  const {product} = props;
-=======
-  const { product } = props;
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
-  const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
+  // const { product } = props;
+  // const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')));
 
-  function handleAddToCart(item) {
-    let cartItems = [];
-    let cart = localStorage.getItem('cart');
-    if (cart === null) {
-      let product = {
-        ...item,
-        quantity: 1
-      };
-      cartItems.push(product);
-      localStorage.setItem('cart', JSON.stringify(cartItems));
-      setCart(cartItems);
-    }
-    else {
-      let cartItems = JSON.parse(cart);
-      let test = cartItems.findIndex(product => product.id === item.id);
-      if (test < 0) {
-        let product = {
-          ...item,
-          quantity: 1
-        };
-        let newCart = [...cartItems, product];
-        localStorage.setItem('cart', JSON.stringify(newCart));
-        setCart(cartItems);
-      }
-      else {
-        let newCart = [...cartItems];
-        newCart[test].quantity += 1;
-        localStorage.setItem('cart', JSON.stringify(newCart));
-        setCart(cartItems);
-      }
-    }
+  // function handleAddToCart(item) {
+  //   let cartItems = [];
+  //   let cart = localStorage.getItem('cart');
+  //   if (cart === null) {
+  //     let product = {
+  //       ...item,
+  //       quantity: 1
+  //     };
+  //     cartItems.push(product);
+  //     localStorage.setItem('cart', JSON.stringify(cartItems));
+  //     setCart(cartItems);
+  //   }
+  //   else {
+  //     let cartItems = JSON.parse(cart);
+  //     let test = cartItems.findIndex(product => product.id === item.id);
+  //     if (test < 0) {
+  //       let product = {
+  //         ...item,
+  //         quantity: 1
+  //       };
+  //       let newCart = [...cartItems, product];
+  //       localStorage.setItem('cart', JSON.stringify(newCart));
+  //       setCart(cartItems);
+  //     }
+  //     else {
+  //       let newCart = [...cartItems];
+  //       newCart[test].quantity += 1;
+  //       localStorage.setItem('cart', JSON.stringify(newCart));
+  //       setCart(cartItems);
+  //     }
+  //   }
 
-  }
+  // }
 
   // function handleAddProduct(){
   //   let iProduct = Product;
@@ -94,40 +85,39 @@ function ProductList(props) {
   //   });
   // }
 
-  return (
-<<<<<<< HEAD
-=======
-    <div>
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
-      <Col lg="3" md="4" sm="6" xs="12">
-        <div className="product">
-          <div className="product__image">
-            <Link to="/details">
-              <img src={product.Thumbnail} />
-            </Link>
-          </div>
-          <div className="product__info">
-            <div className="product__info__title">{product.Name}</div>
-            <div className="product__info__price">{product.InputCost}</div>
-            <div
-              className="product__info__button"
-              onClick={() => handleAddToCart(product)}
-            >
-              Add to cart
-                  </div>
-          </div>
-        </div>
-      </Col>
-<<<<<<< HEAD
-=======
-      <Switch>
-        <Route path="/:productID" component={Details} />
-      </Switch>
-    </div>
+  // return (
+  //   <div>
+  //     <Col lg="3" md="4" sm="6" xs="12">
+  //       <div className="product">
+  //         <div className="product__image">
+  //           <Link to="/details">
+  //             <img src={product.Thumbnail} />
+  //           </Link>
+  //         </div>
+  //         <div className="product__info">
+  //           <div className="product__info__title">{product.Name}</div>
+  //           <div className="product__info__price">{product.InputCost}</div>
+  //           <div
+  //             className="product__info__button"
+  //             onClick={() => handleAddToCart(product)}
+  //           >
+  //             Add to cart
+  //                 </div>
+  //         </div>
+  //       </div>
+  //     </Col>
 
->>>>>>> 8cbb6a50a089c430cc4091d4666fbaf131045410
-  );
+  //   </div>
+
+  // );
+  const match = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={`${match.url}`} component={MainPage} />
+      <Route path={`${match.url}/detail`} component={Details} />
+    </Switch>
+  )
 
 }
 
-export default ProductList;
+export default Products;

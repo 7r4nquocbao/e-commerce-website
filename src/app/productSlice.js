@@ -19,7 +19,6 @@ const productSlice = createSlice({
         else{
           state.push(action.payload);
         }
-        
       }
     }
 })

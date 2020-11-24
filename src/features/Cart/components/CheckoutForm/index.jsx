@@ -1,13 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { FastField, Form, Formik } from 'formik';
+import React from 'react';
+import { Button } from 'reactstrap';
 import InputField from '../../../../custom-fields/InputField';
 import RadioField from '../../../../custom-fields/RadioField';
+import PropTypes from 'prop-types';
 import './Checkout.scss';
-import { Button } from 'reactstrap';
-CheckOutForm.propTypes = {
 
+CheckOutForm.propTypes = {
+  onSubmit: PropTypes.func,
 };
+CheckOutForm.defaultProps = {
+  onSubmit: null,
+}
 
 function CheckOutForm(props) {
   const initialValues = {
@@ -16,8 +20,14 @@ function CheckOutForm(props) {
     phone: '',
     pay: null,
   }
+  const { cart } = props;
+  console.log('cart: ', { cart });
+
   return (
-    <Formik initialValues={initialValues}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={props.onSubmit}
+    >
 
       {
         formikProps => {
@@ -45,6 +55,13 @@ function CheckOutForm(props) {
                 label="Phone number"
                 placeholder="Press phone number..."
               />
+              <FastField
+                name="email"
+                component={InputField}
+
+                label="Email"
+                placeholder="Press email..."
+              />
               <div className="choices">
                 <FastField
                   name="pay"
@@ -61,7 +78,10 @@ function CheckOutForm(props) {
                   label="Payment by Paypal"
                 />
               </div>
-              <Button>Submit</Button>
+              <Button
+                color="danger"
+                type="submit"
+              >Submit</Button>
             </Form>
           );
         }

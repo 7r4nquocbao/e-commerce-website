@@ -15,38 +15,38 @@ Register.propTypes = {
 
 function Register(props) {
 
- 
+
   let userInfo = AccountInfo;
   const history = useHistory();
 
   const registerUser = (email, password) => {
     fb.auth().createUserWithEmailAndPassword(email, password)
-    .then((user) => {
-      firestore.collection("user-infos").doc(user.user.uid).set(AccountInfo)
-      .then(function() {
-          console.log("Document successfully written!");
-      })
-      .catch(function(error) {
-          console.error("Error writing document: ", error);
-      });
+      .then((user) => {
+        firestore.collection("user-infos").doc(user.user.uid).set(AccountInfo)
+          .then(function () {
+            console.log("Document successfully written!");
+          })
+          .catch(function (error) {
+            console.error("Error writing document: ", error);
+          });
 
-      firestore.collection("role-user").doc().set({role: 'Eh3hgU7v089K8gETHtTK', user: user.user.uid})
-      .then(function() {
-          console.log("Document successfully written!");
-      })
-      .catch(function(error) {
-          console.error("Error writing document: ", error);
-      });
+        firestore.collection("role-user").doc().set({ role: 'Eh3hgU7v089K8gETHtTK', user: user.user.uid })
+          .then(function () {
+            console.log("Document successfully written!");
+          })
+          .catch(function (error) {
+            console.error("Error writing document: ", error);
+          });
 
-      console.log(user);
-      history.push('/');
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      alert(errorMessage);
-      // ..
-    });
+        console.log(user);
+        history.push('/');
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        alert(errorMessage);
+        // ..
+      });
   }
 
 
@@ -74,23 +74,23 @@ function Register(props) {
                 errors.email = 'Invalid email address';
               }
 
-              if(values.password.length < 8) {
+              if (values.password.length < 8) {
                 errors.password = 'password must be at least 8 charaters';
               }
 
-              if(values.confirmPassword !== values.password) {
+              if (values.confirmPassword !== values.password) {
                 errors.confirmPassword = 'confirm password do not match';
               }
               console.log(errors);
               return errors;
             }}
 
-            onSubmit = {(values, {setSubmitting}) => {
+            onSubmit={(values, { setSubmitting }) => {
               registerUser(values.email, values.password);
             }}
           >
             {
-              ({isSubmitting}) => {
+              ({ isSubmitting }) => {
                 return (
                   <Form>
                     <FastField
